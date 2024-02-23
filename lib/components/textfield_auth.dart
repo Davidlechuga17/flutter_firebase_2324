@@ -7,7 +7,7 @@ class TextFieldAuth extends StatelessWidget {
   final String hintText;
 
   const TextFieldAuth({
-    super.key,
+    super.key, 
     required this.controller,
     required this.obscureText,
     required this.hintText,

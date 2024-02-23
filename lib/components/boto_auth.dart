@@ -24,8 +24,6 @@ class BotoAuth extends StatelessWidget {
           letterSpacing: 4,
         ),
       ),
-      
-      
     );
   }
 }

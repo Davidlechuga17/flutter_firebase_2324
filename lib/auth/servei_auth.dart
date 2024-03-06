@@ -17,10 +17,23 @@ class ServeiAuth{
     } on FirebaseAuthException catch (e){
     throw Exception(e.code);
     }
+  }
 
   //fer registre
-  
+   Future<UserCredential> registreAmbEmailIPassword(String email, password) async {
+
+    try{
+      UserCredential credencialUsuari = await _auth.createUserWithEmailAndPassword(
+      email: email, 
+      password: password
+    );
+
+    return credencialUsuari;
+    } on FirebaseAuthException catch (e){
+    throw Exception(e.code);
+    }
   }
+
   //fer logout
   Future<void> tancarSessio() async {
     return await _auth.signOut();

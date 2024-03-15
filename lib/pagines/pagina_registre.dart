@@ -29,7 +29,7 @@ class _PaginaRegistreState extends State<PaginaRegistre> {
       serveiAuth.registreAmbEmailIPassword(
         controllerEmail.text, 
         controllerPassword.text,
-      );
+       );
     } catch (e){
 
       showDialog(

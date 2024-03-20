@@ -74,7 +74,9 @@ class PaginaInici extends StatelessWidget {
         Navigator.push(
           context, 
           MaterialPageRoute(
-            builder: (context) => PaginaChat(),
+            builder: (context) => PaginaChat(
+              emailAmbQuiParlem: dadesUsuari["email"],
+            ),
           ),
         );
       },

@@ -48,4 +48,22 @@ class ServeiChat {
     .add(nouMissatge.retornaMapaMissatge()
     );
   }
+
+  Stream<QuerySnapshot> getMissatges(String idUsuariActual, idReceptor){
+
+    //Volem trobar la SalaChat formada per l'ID dels dos usuaris
+    //(idUsuariActual i idReceptor)
+
+
+    //Creem l'id de la SalaChat com quan hi guardem missatges.
+    List<String> idsUsuaris = [idUsuariActual, idReceptor];
+    idsUsuaris.sort();
+    String idSalaChat = idsUsuaris.join("_");
+
+    return _firestore
+      .collection("SalesChat")
+      .doc(idSalaChat)
+      .collection("Missatges")
+      .orderBy("timestamp", descending: false).snapshots();
+  }
 }

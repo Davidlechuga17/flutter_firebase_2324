@@ -25,7 +25,7 @@ class PaginaInici extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: logout, 
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
           ),
         ],
       ),
@@ -76,6 +76,7 @@ class PaginaInici extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => PaginaChat(
               emailAmbQuiParlem: dadesUsuari["email"],
+              idReceptor: dadesUsuari["uid"],
             ),
           ),
         );

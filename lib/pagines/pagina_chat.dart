@@ -1,4 +1,3 @@
-import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,23 +25,66 @@ class PaginaChat extends StatefulWidget {
 class _PaginaChatState extends State<PaginaChat> {
 
   final TextEditingController controllerMissatge =  TextEditingController();
+  final ScrollController controllerScroll = ScrollController();
 
   final ServeiChat _serveiChat = ServeiChat();
   final ServeiAuth _serveiAuth = ServeiAuth();
 
-  void enviarMissatge(){
+  //Variable pel teclat d'un mobil
+  final FocusNode focusNode = FocusNode();
+
+
+  @override
+  void dispose() {
+
+    focusNode.dispose();
+    controllerMissatge.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    focusNode.addListener(() { 
+      Future.delayed(
+        const Duration(milliseconds: 500),
+        () => ferScrollCapAvall(),
+      );
+    });
+
+    //Ens esperem un moment, i llavors movem cap a baix
+    Future.delayed(
+      const Duration(milliseconds: 500),
+      () => ferScrollCapAvall(),
+    );
+  }
+
+  void ferScrollCapAvall(){
+
+    controllerScroll.animateTo(
+      controllerScroll.position.maxScrollExtent, 
+      duration: const Duration(seconds: 1), 
+      curve: Curves.fastOutSlowIn
+    );
+  }
+
+  void enviarMissatge() async{
 
     if(controllerMissatge.text.isNotEmpty){
 
       //Enviar el missatge.
-      _serveiChat.enviarMissatge(
+      await _serveiChat.enviarMissatge(
         widget.idReceptor, 
         controllerMissatge.text,
       );
 
       //Netejar el camp.
       controllerMissatge.clear();
+
     }
+    ferScrollCapAvall();
   }
 
   @override
@@ -85,6 +127,7 @@ class _PaginaChatState extends State<PaginaChat> {
 
         //Retorna dades.
         return ListView(
+          controller: controllerScroll,
           children: snapshot.data!.docs.map((document) => _construirItemMissatge(document)).toList(),
         );
 

@@ -5,7 +5,7 @@ class BombollaMissatge extends StatelessWidget {
 
   final Color colorBombolla;
   final String missatge; 
-
+ 
   const BombollaMissatge({
     super.key,
     required this.missatge,

@@ -69,5 +69,6 @@ Imatges:
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
     
+  
 */
 

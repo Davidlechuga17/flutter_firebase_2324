@@ -33,6 +33,7 @@ class PaginaInici extends StatelessWidget {
                 ),
               );
             }, 
+            
             icon: const Icon(Icons.person),
           ),
           IconButton(
@@ -95,4 +96,6 @@ class PaginaInici extends StatelessWidget {
       },
     ); //Text(dadesUsuari["email"]);
   } 
+
+  
 }

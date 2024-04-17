@@ -11,11 +11,13 @@ class PaginaChat extends StatefulWidget {
 
   final String emailAmbQuiParlem;
   final String idReceptor;
+  
 
   const PaginaChat({
     super.key,
     required this.emailAmbQuiParlem,
     required this.idReceptor,
+    
   });
 
   @override
@@ -32,11 +34,21 @@ class _PaginaChatState extends State<PaginaChat> {
 
   //Variable pel teclat d'un mobil
   final FocusNode focusNode = FocusNode();
+  final DateTime timestamp = DateTime.now();
 
+  String _formatTimestamp(){
+    DateTime now = DateTime.now();
+    if(now.difference(timestamp).inDays>=1){
+      int dias = now.difference(timestamp).inDays;
+      return "hace $dias dias";
+    }else{
+      String hora = '${timestamp.hour.toString().padLeft(2,'0')}:${timestamp.minute.toString().padLeft(2,'0')}';
+      return hora;
+    }
+  }
 
   @override
   void dispose() {
-
     focusNode.dispose();
     controllerMissatge.dispose();
 
@@ -74,16 +86,19 @@ class _PaginaChatState extends State<PaginaChat> {
 
     if(controllerMissatge.text.isNotEmpty){
 
+      
       //Enviar el missatge.
       await _serveiChat.enviarMissatge(
         widget.idReceptor, 
         controllerMissatge.text,
+        
       );
 
       //Netejar el camp.
       controllerMissatge.clear();
 
     }
+
     ferScrollCapAvall();
   }
 
@@ -99,13 +114,15 @@ class _PaginaChatState extends State<PaginaChat> {
           Expanded(
             child: _construirLlistaMissatges()
           ),
-
+          
           //Zona escriure missatge.
           _construirZonaInputUsuari(),
         ],
       ),
     );
   }
+
+  
 
   Widget _construirLlistaMissatges(){
 
@@ -151,12 +168,20 @@ class _PaginaChatState extends State<PaginaChat> {
 
     return Container(
       alignment: aliniament,
-      child: BombollaMissatge(
-        colorBombolla: colorBombolla??Colors.black,
-        missatge: data["missatge"],
+      child: Column(
+        children: [
+          BombollaMissatge(
+            colorBombolla: colorBombolla??Colors.black,
+            missatge: data["missatge"],
+          ),
+          Text(_formatTimestamp()),
+        ],
       ),
+      
     );
   }
+
+  
 
   Widget _construirZonaInputUsuari() {
 

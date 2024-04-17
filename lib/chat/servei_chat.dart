@@ -66,4 +66,6 @@ class ServeiChat {
       .collection("Missatges")
       .orderBy("timestamp", descending: false).snapshots();
   }
+
+  
 }

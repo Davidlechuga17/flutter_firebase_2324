@@ -5,7 +5,9 @@ import 'package:flutter_firebase_2324/auth/servei_auth.dart';
 import 'package:flutter_firebase_2324/chat/servei_chat.dart';
 import 'package:flutter_firebase_2324/components/item_usuari.dart';
 import 'package:flutter_firebase_2324/pagines/editar_dades_usuari.dart';
+import 'package:flutter_firebase_2324/pagines/mostrarEmail.dart';
 import 'package:flutter_firebase_2324/pagines/pagina_chat.dart';
+import 'package:flutter_firebase_2324/pagines/pagina_editarDades.dart';
 
 class PaginaInici extends StatelessWidget {
   PaginaInici({super.key});
@@ -24,6 +26,19 @@ class PaginaInici extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Pàgina inici"),
         actions: [
+
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context, 
+                MaterialPageRoute(
+                  builder: (context) => mostrarEmail(),
+                ),
+              );
+            }, 
+            icon: const Icon(Icons.person),
+          ),
+
           IconButton(
             onPressed: () {
               Navigator.push(

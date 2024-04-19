@@ -34,18 +34,21 @@ class _PaginaChatState extends State<PaginaChat> {
 
   //Variable pel teclat d'un mobil
   final FocusNode focusNode = FocusNode();
-  final DateTime timestamp = DateTime.now();
 
-  String _formatTimestamp(){
-    DateTime now = DateTime.now();
-    if(now.difference(timestamp).inDays>=1){
-      int dias = now.difference(timestamp).inDays;
-      return "hace $dias dias";
-    }else{
-      String hora = '${timestamp.hour.toString().padLeft(2,'0')}:${timestamp.minute.toString().padLeft(2,'0')}';
-      return hora;
-    }
+  String _formatTimestamp(DateTime timestamp) {
+    
+  DateTime now = DateTime.now();
+  Duration difference = now.difference(timestamp);
+
+  if (difference.inDays >= 2) {
+    return "Fa ${difference.inDays} dies";
+  } else if (difference.inDays == 1) {
+    return "Fa 1 dia";
+  } else {
+    return '${timestamp.hour.toString().padLeft(2, '0')}:${timestamp.minute.toString().padLeft(2, '0')}';
   }
+}
+
 
   @override
   void dispose() {
@@ -166,6 +169,9 @@ class _PaginaChatState extends State<PaginaChat> {
     var aliniament = esUsuariActual ? Alignment.centerRight : Alignment.centerLeft;
     var colorBombolla = esUsuariActual ? Colors.green[200] : Colors.amber[200];
 
+    Timestamp timestamp = data["timestamp"];
+    DateTime dateTime = timestamp.toDate();
+
     return Container(
       alignment: aliniament,
       child: Column(
@@ -174,7 +180,7 @@ class _PaginaChatState extends State<PaginaChat> {
             colorBombolla: colorBombolla??Colors.black,
             missatge: data["missatge"],
           ),
-          Text(_formatTimestamp()),
+          Text(_formatTimestamp(dateTime)),
         ],
       ),
       

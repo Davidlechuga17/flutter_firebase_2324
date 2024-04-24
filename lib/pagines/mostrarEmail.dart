@@ -4,60 +4,92 @@ import 'package:flutter_firebase_2324/auth/servei_auth.dart';
 import 'package:flutter_firebase_2324/chat/servei_chat.dart';
 import 'package:flutter_firebase_2324/pagines/pagina_editarDades.dart';
 
-class mostrarEmail extends StatefulWidget {
-   const mostrarEmail({super.key});
+class CambiarNom extends StatefulWidget {
+   const CambiarNom({super.key});
 
   @override
-  State<mostrarEmail> createState() => _mostrarEmailState();
+  State<CambiarNom> createState() => _CambiarNomState();
 }
 
-class _mostrarEmailState extends State<mostrarEmail> {
+class _CambiarNomState extends State<CambiarNom> {
 final ServeiAuth _serveiAuth = ServeiAuth();
-final ServeiChat _serveiChat = ServeiChat();
+final TextEditingController _nomController = TextEditingController();
+
+void logout(){
+  _serveiAuth.tancarSessio();
+}
+
+@override
+void initState(){
+  super.initState();
+
+  _obtenirNomUsuari();
+}
+
+Future<void> _obtenirNomUsuari() async{
+  String? nomUsuari = await _serveiAuth.getNomUsuariActual();
+  if(nomUsuari != null){
+    setState(() {
+      _nomController.text = nomUsuari;
+    });
+  }
+}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _construeixNomUsuari(),
+      appBar: AppBar(
+        title: const Text("Editar dades"),
+        backgroundColor: const Color.fromARGB(255, 180, 146, 204),
+        actions: [
+          IconButton(
+            onPressed: logout, 
+            icon: const Icon(Icons.logout),
+          ),
+        ]
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("${_serveiAuth.getUsuariActual()!.email}", 
+              style: const TextStyle(
+                fontSize: 18
+              ),
+            ),
+
+            const SizedBox(height: 20,),
+
+            TextField(
+              controller: _nomController,
+              decoration: const InputDecoration(
+                hintText: "Escriu el teu nom...",
+              ),
+            ),
+
+            const SizedBox(height: 20,),
+
+            ElevatedButton(
+              onPressed: () {
+                String nouNom = _nomController.text.trim();
+
+                if(nouNom.isEmpty){
+                  return;
+                }
+
+                _serveiAuth.actualitzarNomUsuari(nouNom);
+
+                Navigator.pop(context);
+
+              }, 
+              child: const Text("Guardar"),
+            ), 
+          ],
+        ),
+      ),
     );
   }
 
-  Widget _construeixNomUsuari(){
-
-    return StreamBuilder(
-      stream: _serveiChat.getUsuaris(), 
-      builder: (context, snapshot){
-
-        // Mirar si hi ha error.
-        if(snapshot.hasError){
-
-          return const Text("Error");
-        }
-
-        //Esperem que es carreguin les dades.
-        if(snapshot.connectionState == ConnectionState.waiting){
-          
-          return const Text("Carregant dades...");
-        }
-
-        //Es retornen les dades.
-        return ListView(
-          children: snapshot.data!.map<Widget>(
-            (dadesUsuari) => mostra(dadesUsuari)
-          ).toList(),
-        );
-      },
-    );
-  }
-
-  Widget mostra(Map<String, dynamic> dadesUsuari){
-    if (dadesUsuari["email"] == _serveiAuth.getUsuariActual()!.email) {
-      
-      return Container();
-    }
-
-    return PaginaEditarDades(
-      emailUsuari: dadesUsuari["email"],
-    );
-  }
+ 
 }

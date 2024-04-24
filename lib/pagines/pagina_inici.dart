@@ -32,11 +32,11 @@ class PaginaInici extends StatelessWidget {
               Navigator.push(
                 context, 
                 MaterialPageRoute(
-                  builder: (context) => mostrarEmail(),
+                  builder: (context) => const CambiarNom(),
                 ),
               );
             }, 
-            icon: const Icon(Icons.person),
+            icon: const Icon(Icons.person_2),
           ),
 
           IconButton(

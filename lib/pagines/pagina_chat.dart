@@ -109,7 +109,20 @@ class _PaginaChatState extends State<PaginaChat> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.emailAmbQuiParlem),   
+        title: FutureBuilder<String?>(
+          future: _serveiAuth.obtenirNomUsuariPerId(widget.idReceptor),
+          builder: (context, snapshot){
+            if(snapshot.connectionState == ConnectionState.waiting){
+              return const Text("Carregant...");
+            }else{
+              if(snapshot.hasError || snapshot.data == null){
+                return Text(widget.emailAmbQuiParlem);
+              }else{
+                return Text(snapshot.data!);
+              }
+            }
+          },
+        ),  
       ),
       body: Column(
         children: [

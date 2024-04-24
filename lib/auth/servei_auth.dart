@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class ServeiAuth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -16,6 +17,7 @@ class ServeiAuth {
       _firestore.collection("Usuaris").doc(credencialUsuari.user!.uid).set({
         "uid": credencialUsuari.user!.uid,
         "email": email,
+        "nom" : obtenirNomUsuariPerId(credencialUsuari.user!.uid),
       });
 
       return credencialUsuari;
@@ -62,7 +64,7 @@ class ServeiAuth {
         if (data != null && data.containsKey('nom')) {
           return data['nom'] as String?;
         } else {
-          return null; // El campo 'nom' no está presente en el documento
+          return null; // El campo 'nom' no está en el documento
         }
       } else {
         return null; // El documento no existe

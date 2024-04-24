@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_2324/pagines/editar_dades_usuari.dart';
 
 class ItemUsuari extends StatelessWidget {
 
   final String emailUsuari;
+  final String? urlImatge;
   final void Function()? onTap;
 
   const ItemUsuari({
     super.key,
     required this.emailUsuari,
     required this.onTap,
+     this.urlImatge,
   });
 
   @override
@@ -27,12 +30,15 @@ class ItemUsuari extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: Row(
           children: [
+            if(urlImatge != null)
+              Image.network(urlImatge!)
             
-            const Icon(Icons.person),
-            const SizedBox(width: 10,),
+            else
+              const Icon(Icons.person),
+              
+            const SizedBox(width: 10),
             Text(emailUsuari),
           ]
-          
         ),
       ),
     );

@@ -7,7 +7,7 @@ import 'package:flutter_firebase_2324/components/item_usuari.dart';
 import 'package:flutter_firebase_2324/pagines/editar_dades_usuari.dart';
 import 'package:flutter_firebase_2324/pagines/mostrarEmail.dart';
 import 'package:flutter_firebase_2324/pagines/pagina_chat.dart';
-import 'package:flutter_firebase_2324/pagines/pagina_editarDades.dart';
+
 
 class PaginaInici extends StatelessWidget {
   PaginaInici({super.key});
@@ -36,7 +36,7 @@ class PaginaInici extends StatelessWidget {
                 ),
               );
             }, 
-            icon: const Icon(Icons.person_2),
+            icon: const Icon(Icons.person),
           ),
 
           IconButton(
@@ -49,7 +49,7 @@ class PaginaInici extends StatelessWidget {
               );
             }, 
             
-            icon: const Icon(Icons.person),
+            icon: const Icon(Icons.upload_file),
           ),
           IconButton(
             onPressed: logout, 
@@ -105,6 +105,7 @@ class PaginaInici extends StatelessWidget {
             builder: (context) => PaginaChat(
               emailAmbQuiParlem: dadesUsuari["email"],
               idReceptor: dadesUsuari["uid"],
+              
             ),
           ),
         );

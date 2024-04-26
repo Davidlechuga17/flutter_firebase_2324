@@ -36,6 +36,7 @@ class ServeiAuth {
       _firestore.collection("Usuaris").doc(credencialUsuari.user!.uid).set({
         "uid": credencialUsuari.user!.uid,
         "email": email,
+        "nom" : obtenirNomUsuariPerId(credencialUsuari.user!.uid),
       });
 
       return credencialUsuari;

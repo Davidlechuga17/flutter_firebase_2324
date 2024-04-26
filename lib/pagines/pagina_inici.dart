@@ -1,5 +1,6 @@
 import 'dart:js';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_2324/auth/servei_auth.dart';
 import 'package:flutter_firebase_2324/chat/servei_chat.dart';
@@ -14,6 +15,7 @@ class PaginaInici extends StatelessWidget {
 
   final ServeiAuth _serveiAuth = ServeiAuth();
   final ServeiChat _serveiChat = ServeiChat();
+  
 
   void logout(){
 
@@ -95,12 +97,15 @@ class PaginaInici extends StatelessWidget {
       
       return Container();
     }
+    final String idUsuari = ServeiAuth().getUsuariActual()!.uid;
     
     return ItemUsuari(
       emailUsuari: dadesUsuari["email"],
+      uid: dadesUsuari["uid"],
       onTap: () {
         Navigator.push(
           context, 
+          
           MaterialPageRoute(
             builder: (context) => PaginaChat(
               emailAmbQuiParlem: dadesUsuari["email"],
@@ -108,10 +113,10 @@ class PaginaInici extends StatelessWidget {
               
             ),
           ),
+          
         );
       },
+      urlImatge: "$idUsuari/avatar/$idUsuari",
     ); //Text(dadesUsuari["email"]);
   } 
-
-  
 }
